@@ -12,21 +12,21 @@ class Message {
     }
 
     public function create(string $titulo, string $descricao, string $status): bool {
-        if (empty($titulo) || empty($descricao) || empty($status)) {
+        if (empty($titulo) || empty($descricao)) {
             throw new \InvalidArgumentException("Campos obrigatórios não preenchidos.");
         }
 
-        $sql = "INSERT INTO mensagens (titulo, descricao, status, criado_em, atualizado_em) 
-                VALUES (:titulo, :descricao, :status, NOW(), NOW())";
-        
+        $sql = "INSERT INTO mensagens (titulo, descricao, status) 
+                VALUES (:titulo, :descricao, :status)";
+        $stmt = $this->pdo->prepare($sql);
+
         try {
-            $stmt = $this->pdo->prepare($sql);
-            $result = $stmt->execute([
+            $stmt->execute([
                 ':titulo' => $titulo,
                 ':descricao' => $descricao,
                 ':status' => $status
             ]);
-            return $result;
+            return true;
         } catch (PDOException $e) {
             error_log("Erro ao criar mensagem: " . $e->getMessage());
             return false;

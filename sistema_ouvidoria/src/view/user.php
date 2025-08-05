@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>Cadastro de Usuário</title>
-    <style>
-        form { margin: 20px; }
-        div { margin-bottom: 10px; }
-    </style>
+    
+        <link rel="stylesheet" href="public/assets/scss/style.scss">
+        <link rel="stylesheet" href="public/assets/css/styles.css">
 </head>
 <body>
+    <div id="cadastro">
     <h1>Cadastro de Usuário</h1>
     <form method="POST" action="/registrar-usuario">
         <div>
@@ -32,10 +32,12 @@
         </div>
         <button type="submit">Cadastrar</button>
     </form>
-    <?php if (isset($resultado['sucesso'])): ?>
-        <div style="color: green"><?php echo $resultado['sucesso']; ?></div>
-    <?php elseif (isset($resultado['erro'])): ?>
-        <div style="color: red"><?php echo $resultado['erro']; ?></div>
+    </div>
+    
+    <?php if (isset($resultadoUser['sucesso'])): ?>
+        <div style="color: green"><?php echo $resultadoUser['sucesso']; ?></div>
+    <?php elseif (isset($resultadoUser['erro'])): ?>
+        <div style="color: red"><?php echo $resultadoUser['erro']; ?></div>
     <?php endif; ?>
 </body>
 </html>

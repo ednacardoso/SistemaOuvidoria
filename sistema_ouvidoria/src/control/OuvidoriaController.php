@@ -3,17 +3,20 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Models\Message;
+use App\Models\Login;
 use PDO;
 
 class OuvidoriaController {
     private $pdo;
     private $userModel;
     private $messageModel;
+    private $loginModel;
 
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
         $this->userModel = new User($pdo);
         $this->messageModel = new Message($pdo);
+        $this->loginModel = new Login($pdo); // Add this line
     }
 
     public function registrarUsuario() {
@@ -41,4 +44,20 @@ class OuvidoriaController {
         }
         return [];
     }
-}
+
+    public function efetuarLogin() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? '';
+            $senha = $_POST['senha'] ?? '';   
+            $result = $this->loginModel->authenticate($email, $senha);
+
+            if ($result) {
+                $_SESSION['logged_in'] = true;
+                $_SESSION['email'] = $email;
+                return ['sucesso' => 'Login efetuado com sucesso'];
+            }
+            return ['erro' => 'Credenciais inválidas'];
+        }
+        return [];
+    }
+}    
