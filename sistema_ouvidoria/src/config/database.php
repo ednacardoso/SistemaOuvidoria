@@ -1,11 +1,7 @@
 <?php
 
 function getConnection() {
-    $host = 'localhost';         // Endereço do servidor PostgreSQL
-    $dbname = 'ouvidoria'; // Nome do banco
-    $user = 'postgres';       // Usuário do PostgreSQL
-    $password = '1a2badmin#$#';     // Senha do PostgreSQL
-    $port = '5432';              // Porta padrão
+   
 
     try {
         $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
@@ -17,4 +13,5 @@ function getConnection() {
     } catch (PDOException $e) {
         die("Erro na conexão: " . $e->getMessage());
     }
+
 }
