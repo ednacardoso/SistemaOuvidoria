@@ -6,9 +6,12 @@
     <link rel="stylesheet" href="public/assets/css/styles.css">    
 </head>
 <body>
+    <div style="text-align: right; padding: 10px;">
+        <a href="/logout.php" style="color: white; text-decoration: none;">Sair</a>
+    </div>
     <div id="cadastro">
         <h1>Envio de Mensagem</h1>
-        <form method="POST" action="/registrar-mensagem">
+        <form method="POST" action="/mensagem.php">
             <div>
                 <label>Título:</label>
                 <input type="text" name="titulo" required>
@@ -26,9 +29,9 @@
     </div>
     
     <?php if (isset($resultadoMensagem['sucesso'])): ?>
-        <div style="color: green"><?php echo $resultadoMensagem['sucesso']; ?></div>
+        <div style="color: green; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoMensagem['sucesso']); ?></div>
     <?php elseif (isset($resultadoMensagem['erro'])): ?>
-        <div style="color: red"><?php echo $resultadoMensagem['erro']; ?></div>
+        <div style="color: red; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoMensagem['erro']); ?></div>
     <?php endif; ?>
 </body>
 </html>

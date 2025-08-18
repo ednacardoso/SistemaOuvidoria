@@ -1,33 +1,26 @@
 <?php
 namespace App\Models;
 
-use PDO;
-use PDOException;
+use Illuminate\Database\Eloquent\Model;
 
-class Message {
-    private $pdo;
+class Message extends Model {
+    protected $table = 'mensagens';
+    public $timestamps = false;
+    protected $fillable = ['titulo', 'descricao', 'status'];
 
-    public function __construct(PDO $pdo) {
-        $this->pdo = $pdo;
-    }
-
-    public function create(string $titulo, string $descricao, string $status): bool {
+    public static function createMessage(string $titulo, string $descricao, string $status): bool {
         if (empty($titulo) || empty($descricao)) {
             throw new \InvalidArgumentException("Campos obrigatórios não preenchidos.");
         }
 
-        $sql = "INSERT INTO mensagens (titulo, descricao, status) 
-                VALUES (:titulo, :descricao, :status)";
-        $stmt = $this->pdo->prepare($sql);
-
         try {
-            $stmt->execute([
-                ':titulo' => $titulo,
-                ':descricao' => $descricao,
-                ':status' => $status
+            self::create([
+                'titulo' => $titulo,
+                'descricao' => $descricao,
+                'status' => $status
             ]);
             return true;
-        } catch (PDOException $e) {
+        } catch (\Exception $e) {
             error_log("Erro ao criar mensagem: " . $e->getMessage());
             return false;
         }

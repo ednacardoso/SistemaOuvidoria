@@ -22,10 +22,8 @@
             <button id="envio" type="submit">Entrar</button>
         </form>
     </div>    
-    <?php if (isset($resultadoUser['sucesso'])): ?>
-        <div style="color: green"><?php echo $resultadoUser['sucesso']; ?></div>
-    <?php elseif (isset($resultadoUser['erro'])): ?>
-        <div style="color: red"><?php echo $resultadoUser['erro']; ?></div>
+    <?php if (isset($resultadoLogin['erro'])): ?>
+        <div style="color: red; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoLogin['erro']); ?></div>
     <?php endif; ?>
 </body>
 </html>
