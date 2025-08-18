@@ -9,7 +9,7 @@
 <body>
     <div id="cadastro">
     <h1>Cadastro de Usuário</h1>
-    <form method="POST" action="/registrar-usuario">
+    <form method="POST" action="/user.php">
         <div>
             <label>Nome:</label>
             <input type="text" name="nome" required>
@@ -35,9 +35,9 @@
     </div>
     
     <?php if (isset($resultadoUser['sucesso'])): ?>
-        <div style="color: green"><?php echo $resultadoUser['sucesso']; ?></div>
+        <div style="color: green; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoUser['sucesso']); ?></div>
     <?php elseif (isset($resultadoUser['erro'])): ?>
-        <div style="color: red"><?php echo $resultadoUser['erro']; ?></div>
+        <div style="color: red; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoUser['erro']); ?></div>
     <?php endif; ?>
 </body>
 </html>

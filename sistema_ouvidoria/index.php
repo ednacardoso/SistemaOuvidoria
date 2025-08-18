@@ -1,61 +1,59 @@
 <?php
 session_start();
-require_once 'src/config/database.php';
-require_once 'src/model/User.php';
-require_once 'src/model/Message.php';
-require_once 'src/model/Login.php';
-require_once 'src/control/OuvidoriaController.php';
 
-use App\Controllers\OuvidoriaController;
+require_once __DIR__ . '/vendor/autoload.php'; // Autoload do Composer
+require_once 'src/config/eloquent.php'; // Inicializa o Eloquent
 
-// Conexão com o banco de dados
-$pdo = getConnection();
-$controller = new OuvidoriaController($pdo);
+use App\Controllers\RegistroUserController;
+use App\Controllers\MensagemController;
+use App\Controllers\LoginController;
+use App\Models\User;
+use App\Models\Message;
+use App\Models\Login;
+
+// Instanciação dos Models
+$userController = new RegistroUserController(new User());
+$messageController = new MensagemController(new Message());
+$loginController = new LoginController(new Login());
 
 // Roteamento
 
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Rota para página de cadastro de usuário
-if ($requestUri === '/' || $requestUri === '/user' || $requestUri === '/user.php') 
-    {
-    $resultadoUser = [];
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $resultadoUser = $controller->registrarUsuario();
-    }
-    require_once 'src/view/user.php';
-}
-// Rota para processar o cadastro de usuário
-elseif ($requestUri === '/registrar-usuario' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $resultadoUser = $controller->registrarUsuario();
-    require_once 'src/view/user.php';
-}
-// Rota para página de envio de mensagem
-elseif ($requestUri === '/mensagem.php') 
-    {
-    $resultadoMensagem = [];
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $resultadoMensagem = $controller->registrarMensagem();
-    }
-    require_once 'src/view/mensagem.php';
-}
-// Rota para processar o envio de mensagem
-elseif ($requestUri === '/registrar-mensagem' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $resultadoMensagem = $controller->registrarMensagem();
-    require_once 'src/view/mensagem.php';
-}
-elseif ($requestUri === '/efetuar-login.php' || $requestUri === '/efetuar-login') {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $resultadoLogin = $controller->efetuarLogin();
-        if (isset($resultadoLogin['sucesso'])) {
-            header('Location: /mensagem.php');
-            exit();
+switch ($requestUri) {
+    case '/':
+    case '/user.php':
+    case '/user':       
+        $resultadoUser = $userController->registrarUsuario();
+        require_once 'src/view/user.php';
+        break;
+
+    case '/mensagem.php':
+    case '/mensagem':        
+        $resultadoMensagem = $messageController->registrarMensagem();
+        require_once 'src/view/mensagem.php';
+        break;
+
+    case '/efetuar-login.php':
+    case '/efetuar-login':
+        $resultadoLogin = [];        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $resultadoLogin = $loginController->efetuarLogin();
+            if (isset($resultadoLogin['sucesso'])) {
+                header('Location: /mensagem.php');
+                exit();
+            }
         }
-    }
-    require_once 'src/view/efetuar-login.php';
-}
-// Página não encontrada
-else {
-    http_response_code(404);
-    echo "Página não encontrada.";
+        require_once 'src/view/efetuar-login.php';
+        break;
+
+    case '/logout.php':
+    case '/logout':
+        $loginController->logout();
+        break;
+
+    default:
+        http_response_code(404);
+        echo "Página não encontrada.";
+        break;
 }
