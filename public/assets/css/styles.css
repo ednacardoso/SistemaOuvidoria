@@ -1,0 +1,51 @@
+body {
+  background-color: rgb(107, 146, 129);
+  font-family: "Gill Sans", sans-serif;
+  color: #666;
+}
+body .container {
+  max-width: 15rem;
+  margin: 10rem 10rem 30rem 30rem;
+  padding: 10rem;
+}
+
+#cadastro {
+  background-color: #e6ecec;
+  padding: 3rem 8rem 5rem 8rem;
+  margin: 20rem 78rem 10rem 10rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: rgb(16, 1, 70);
+}
+#cadastro div {
+  margin-bottom: 2rem;
+}
+#cadastro form {
+  margin: 2rem 2rem 2rem -2rem;
+}
+
+#titulo {
+  text-align: left;
+  margin: 2rem 1rem 2rem -1.5rem;
+  font-size: 0.8rem;
+}
+
+#envio {
+  justify-items: center;
+  color: #ece2e2;
+  background-color: #4770c7;
+  border-radius: 2rem;
+  width: 10rem;
+  height: 2rem;
+  margin: 0rem 0rem 0rem 1rem;
+}
+
+#form1 {
+  width: 12rem;
+}
+
+#div1 {
+  align-items: center;
+}
+
+/*# sourceMappingURL=styles.css.map */
