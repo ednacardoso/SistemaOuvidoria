@@ -4,8 +4,8 @@ function getConnection() {
     $host = 'localhost';         
     $dbname = 'ouvidoria'; 
     $user = 'postgres';       
-    $password = '1a2badmin#$#';     // Senha do PostgreSQL
-    $port = '5432';              // Porta padrão
+    $password = '1a2badmin#$#';     
+    $port = '5432';              
 
     try {
         $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";

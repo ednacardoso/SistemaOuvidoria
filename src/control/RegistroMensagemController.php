@@ -1,9 +1,9 @@
 <?php
-namespace App\Controllers;
+namespace App\control;
 
-use App\Models\User;
-use App\Models\Message;
-use App\Models\Login;
+use App\model\User;
+use App\model\Message;
+use App\model\Login;
 use PDO;
 
 class RegistroMensagemController {
@@ -55,4 +55,4 @@ class RegistroMensagemController {
     }
 
     
-}    
+}

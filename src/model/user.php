@@ -22,9 +22,9 @@ class User extends Model {
 
         try {
             // Remove caracteres não numéricos do CPF e telefone
-            $cpf = preg_replace('/[^0-9]/', '', $cpf);
+            $cpf = preg_replace('/[^0-11]/', '', $cpf);
             if ($telefone) {
-                $telefone = preg_replace('/[^0-9]/', '', $telefone);
+                $telefone = preg_replace('/[^0-11]/', '', $telefone);
             }
 
             self::create([

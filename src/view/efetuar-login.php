@@ -5,7 +5,6 @@
         </h1>
 
          <h1 class="form-title">
-            <img src="/assets/img/ipem.png" alt="Logo IPEM" style="width: 150px; display: block; margin: 0 auto 20px;">
             Faça o seu login
         </h1>
         
