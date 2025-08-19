@@ -1,29 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login de Usuário</title>
-        <link rel="stylesheet" href="public/assets/scss/style.scss">
-        <link rel="stylesheet" href="public/assets/css/styles.css">
-</head>
-<body>
-    <div id="cadastro">
-        <div id="titulo">
-            <h1>Faça o seu Login</h1>
-        </div>        
+<?php include __DIR__ . '/../templates/header.php'; ?>
+    <div class="form-container">
+        <h1 class="form-title">
+            Sistema de Ouvidoria
+        </h1>
+
+         <h1 class="form-title">
+            <img src="/assets/img/ipem.png" alt="Logo IPEM" style="width: 150px; display: block; margin: 0 auto 20px;">
+            Faça o seu login
+        </h1>
+        
         <form method="POST" action="/efetuar-login">        
-            <div>
-                <label>Email:</label>
-                <input id="form1" type="email" name="email" required>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input id="email" type="email" name="email" required>
             </div>       
-            <div>
-                <label>Senha:</label>
-                <input id="form1" type="password" name="senha" required>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input id="senha" type="password" name="senha" required>
             </div>
-            <button id="envio" type="submit">Entrar</button>
+            <button class="btn" type="submit">Entrar</button>
         </form>
+
+        <div class="register-link">
+            <p>Não tem uma conta? <a href="/user">Cadastre-se</a></p>
+        </div>
+        
+        <?php if (isset($resultadoLogin['erro'])): ?>
+            <div class="error-message"><?php echo htmlspecialchars($resultadoLogin['erro']); ?></div>
+        <?php endif; ?>
     </div>    
-    <?php if (isset($resultadoLogin['erro'])): ?>
-        <div style="color: red; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoLogin['erro']); ?></div>
-    <?php endif; ?>
-</body>
-</html>
+<?php include __DIR__ . '/../templates/footer.php'; ?>

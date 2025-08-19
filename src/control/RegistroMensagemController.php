@@ -27,7 +27,7 @@ class RegistroMensagemController {
                 $telefone = $_POST['telefone'] ?? null;
 
                 $result = User::createUser($nome, $email, $cpf, $senha, $telefone);
-                // O model retorna false em caso de PDOException (ex: e-mail/cpf duplicado)
+                
                 return $result
                     ? ['sucesso' => 'Usuário cadastrado com sucesso!']
                     : ['erro' => 'Erro ao cadastrar usuário. O e-mail ou CPF pode já estar em uso.'];

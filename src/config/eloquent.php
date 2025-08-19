@@ -6,14 +6,15 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 $capsule = new Capsule;
 
 $capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => '127.0.0.1',
-    'database'  => 'ouvidoria_db',
-    'username'  => 'root',
-    'password'  => '',
+    'driver'    => 'pgsql',
+    'host'      => 'localhost',
+    'port'      => '5432',
+    'database'  => 'ouvidoria',
+    'username'  => 'postgres',
+    'password'  => '1a2badmin#$#',
     'charset'   => 'utf8',
-    'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
+    'schema'    => 'public',
 ]);
 
 $capsule->setAsGlobal();

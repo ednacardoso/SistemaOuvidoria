@@ -1,19 +1,18 @@
 <?php
-namespace App\Models;
+namespace App\model;
 
-class Login {
-    // Este model não precisa mais de um construtor
+use App\model\User;
+
+class Login {    
 
     public function authenticate(string $email, string $senha): bool {
         if (empty($email) || empty($senha)) {
             throw new \InvalidArgumentException("Campos obrigatórios não preenchidos.");
         }
 
-        try {
-            // Usamos o Model User do Eloquent para buscar o usuário
+        try {            
             $user = User::where('email', $email)->first();
             
-            // Se o usuário existe e a senha está correta
             if ($user && password_verify($senha, $user->senha)) {
                 return true;
             }

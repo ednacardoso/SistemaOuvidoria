@@ -1,23 +1,32 @@
 <?php
-namespace App\Models;
+namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model {
-    protected $table = 'usuarios'; // Nome da tabela no banco
-    public $timestamps = false; // Desativa colunas created_at e updated_at
+    protected $table = 'usuarios'; 
+    public $timestamps = false; 
 
-    // Define quais campos podem ser preenchidos em massa
+   
     protected $fillable = ['nome', 'email', 'cpf', 'senha', 'telefone'];
 
     public static function createUser(string $nome, string $email, string $cpf, string $senha, ?string $telefone = null): bool {
         if (empty($nome) || empty($email) || empty($cpf) || empty($senha)) {
             throw new \InvalidArgumentException("Campos obrigatórios não preenchidos.");
         }
+        
+        $existingUser = self::where('email', $email)->orWhere('cpf', $cpf)->first();
+        if ($existingUser) {
+            throw new \InvalidArgumentException("O e-mail ou CPF já está em uso.");
+        }
 
         try {
-            // O Eloquent cuida do hashing automaticamente se usarmos um "mutator"
-            // Mas para simplificar, vamos fazer aqui por enquanto.
+            // Remove caracteres não numéricos do CPF e telefone
+            $cpf = preg_replace('/[^0-9]/', '', $cpf);
+            if ($telefone) {
+                $telefone = preg_replace('/[^0-9]/', '', $telefone);
+            }
+
             self::create([
                 'nome' => $nome,
                 'email' => $email,
@@ -28,7 +37,7 @@ class User extends Model {
             return true;
         } catch (\Exception $e) {
             error_log("Erro ao criar usuário: " . $e->getMessage());
-            return false;
+            throw new \RuntimeException("Erro ao salvar o usuário no banco de dados.");
         }
     }
 }

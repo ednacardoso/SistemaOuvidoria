@@ -1,37 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Envio de Mensagem</title>   
-    <link rel="stylesheet" href="public/assets/scss/style.scss">
-    <link rel="stylesheet" href="public/assets/css/styles.css">    
-</head>
-<body>
-    <div style="text-align: right; padding: 10px;">
-        <a href="/logout.php" style="color: white; text-decoration: none;">Sair</a>
+<?php
+require_once __DIR__ . '/../templates/header.php';
+?>
+    <div class="logout-container">
+        <a href="/logout.php" class="btn">Sair</a>
     </div>
-    <div id="cadastro">
-        <h1>Envio de Mensagem</h1>
+    <div class="form-container">
+        <h1 class="form-title">Envio de Mensagem</h1>
         <form method="POST" action="/mensagem.php">
-            <div>
-                <label>Título:</label>
-                <input type="text" name="titulo" required>
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
             </div>
-            <div>
-                <label>Descrição:</label>
-                <textarea name="descricao" required></textarea>
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" required></textarea>
             </div>
-            <div>
-                <label>Status:</label>
-                <input type="text" name="status" value="Pendente" required>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" value="Pendente" readonly>
             </div>
-            <button type="submit">Cadastrar</button>
+            <button type="submit" class="btn">Cadastrar</button>
         </form>
+        
+        <?php if (isset($resultadoMensagem['sucesso'])): ?>
+            <div class="success-message"><?php echo htmlspecialchars($resultadoMensagem['sucesso']); ?></div>
+        <?php elseif (isset($resultadoMensagem['erro'])): ?>
+            <div class="error-message"><?php echo htmlspecialchars($resultadoMensagem['erro']); ?></div>
+        <?php endif; ?>
     </div>
-    
-    <?php if (isset($resultadoMensagem['sucesso'])): ?>
-        <div style="color: green; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoMensagem['sucesso']); ?></div>
-    <?php elseif (isset($resultadoMensagem['erro'])): ?>
-        <div style="color: red; margin-left: 10rem;"><?php echo htmlspecialchars($resultadoMensagem['erro']); ?></div>
-    <?php endif; ?>
-</body>
-</html>
+<?php
+require_once __DIR__ . '/../templates/footer.php';
+?>
